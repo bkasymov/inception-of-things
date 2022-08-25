@@ -20,16 +20,3 @@ This project aims to introduce you to kubernetes from a developer perspective. Y
 2. K3D have scalable version
 3. More features
 4. You could k3D even in little devices (RaspBerry Pi, IoT).
-
-
-# Useful commands:
-vagrant up
-kubectl get all -n kube-system
-kubectl get all 
-kubectl get nodes -o wide
-kubectl get pods --all-namespaces
-kubectl get ns
-kubectl get deploy
-ifconfig eth1 | grep inet
-curl -H "Host:app1.com" 192.168.57.110 | grep LOCAL
-kubectl get svc
