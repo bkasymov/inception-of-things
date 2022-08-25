@@ -32,12 +32,12 @@ At the second exercise create one virtual machine and install K3S. In K3S cluste
 
 # P3
 
-![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p3.png)
+![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p3-2.png)
 
 Install K3D where have deployment of ARGO CD. Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. At this task we set configurations for deployment of our simple application and support update of versions via hash compare of commits.
 
 
-![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p3-2.png)
+![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p3.png)
 
 # Bonus exercise
 
