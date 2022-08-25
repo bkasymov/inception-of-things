@@ -1,0 +1,63 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+login = "dpenney"
+# set general configs for master and worker nodes with IP addresses like setted in Subject.
+IP = "192.168.57"
+MASTER_SERVER_NAME = "#{login}S"
+MASTER_SERVER_IP   = "#{IP}.110"
+WORKER_SERVER_NAME = "#{login}SW"
+WORKER_SERVER_IP   = "#{IP}.111"
+
+Vagrant.configure("2") do |config|
+
+  #image should be just CentOS#7
+ # config.vm.box = "centos/8"  # Используем согласно сабжекту образ последней версии centos.
+ #config.vm.box_url = "/Users/apearl/goinfre/CentOS-8-Vagrant-8.3.2011-20201204.2.x86_64.vagrant-virtualbox.box" 
+  
+ config.vm.box     = "generic/centos7"
+ #config.vm.box_url = "https://app.vagrantup.com/generic/boxes/centos7/versions/3.6.14/providers/virtualbox.box"
+ config.vm.box_url = "file:///Users/apearl/goinfre/241ec1e2-9836-4981-98f7-4643bc7173e2"
+
+  # set src and dest folders for exchange files between host and VM
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+    # VBoxManage  https://www.virtualbox.org/manual/ch08.html https://www.vagrantup.com/docs/providers/virtualbox/configuration 
+    # v is mean alias name of virtualbox
+  config.vm.provider :virtualbox do |v|
+    # as a subject setted next configs
+    v.customize ["modifyvm", :id, "--memory", 1024]
+    v.customize ["modifyvm", :id, "--cpus", 1]
+    # 9.8.6. Using the Host's Resolver as a DNS Proxy in NAT Mode   https://www.virtualbox.org/manual/ch09.html#nat-adv-dns  
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    # 9.8.5. Enabling DNS Proxy in NAT Mode
+    v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  end
+
+  # Server
+  config.vm.define MASTER_SERVER_NAME do |control|
+    #set master name for first node
+    control.vm.hostname = MASTER_SERVER_NAME
+    # set static IP address like in Subject
+    control.vm.network "private_network", ip: MASTER_SERVER_IP
+    control.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--name", MASTER_SERVER_NAME]
+    end
+    # launch inner scripts for install necessary utilits and set connection between master and worker
+    control.vm.provision "shell", privileged: false, path: "scripts/server.sh", env: {"NODE_IP": MASTER_SERVER_IP}
+  end
+
+  # ServerWorker
+  config.vm.define WORKER_SERVER_NAME do |control|
+    control.vm.hostname = WORKER_SERVER_NAME
+    control.vm.network "private_network", ip: WORKER_SERVER_IP
+    control.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--name", WORKER_SERVER_NAME]
+    end
+    # find private key of ssh for exchange with master node
+    control.vm.provision "file", source: ".vagrant/machines/#{MASTER_SERVER_NAME}/virtualbox/private_key", destination: "~/private_key"
+    # after that launch script for agent
+    control.vm.provision "shell", privileged: false, path: "scripts/agent.sh", env: {"MASTER_SERVER_IP": MASTER_SERVER_IP, "NODE_IP": WORKER_SERVER_IP}
+  end
+
+end

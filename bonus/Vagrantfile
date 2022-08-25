@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+login   = "apearl"
+node_ip = "192.168.56.110"
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+  config.vm.box_url = "/Users/apearl/goinfre/focal-server-cloudimg-amd64-vagrant.box"
+
+  config.vm.synced_folder ".", "/vagrant_config_files", disabled: false, create: true
+
+  config.vm.hostname = "#{login}S"
+  config.vm.network "private_network", ip: node_ip
+
+  # ARGOCD 
+  config.vm.network "forwarded_port", guest: 8080, host: 8080, protocol: "tcp"
+  # Gitlab
+  config.vm.network "forwarded_port", guest: 8081, host: 8081, protocol: "tcp"
+  # Balancer of Gitlab
+  config.vm.network "forwarded_port", guest: 8082, host: 8082, protocol: "tcp"
+  # response of app
+  config.vm.network "forwarded_port", guest: 8888, host: 8888, protocol: "tcp"
+
+
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["modifyvm", :id, "--name", config.vm.hostname]
+    v.customize ["modifyvm", :id, "--memory", 12288]
+    v.customize ["modifyvm", :id, "--cpus", 4]
+  end
+
+  config.vm.provision "shell", privileged: false, path: "scripts/install.sh"
+  config.vm.provision "shell", privileged: true, path: "scripts/cluster_gitlab.sh"
+end

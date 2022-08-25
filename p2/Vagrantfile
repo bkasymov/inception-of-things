@@ -1,0 +1,23 @@
+Vagrant.configure("2") do |config| # Строка говорит что будем использовать конфигурацию Вагранда 2-й версии
+  config.vm.box = "centos/8"  # Используем согласно сабжекту образ последней версии centos.
+   
+  config.vm.box_url = "/Users/apearl/goinfre/CentOS-8-Vagrant-8.3.2011-20201204.2.x86_64.vagrant-virtualbox.box" 
+  
+  config.vm.define "apearlS" do |control| # название машины согласно сабжекту является ником одного из сдающих с S на конце у сервера.
+    control.vm.hostname = "apearlS"
+    control.vm.network "private_network", ip: "192.168.57.110" # Настройка из сабжекта
+    control.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--name", "apearlS"] # Ресурсы по сабжекту 1 проц, 512 оперативы
+      v.customize ["modifyvm", :id, "--memory", "4096"]
+      v.customize ["modifyvm", :id, "--cpus", "4"]
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"] # 2 строки из старого сабжекта 
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+   end
+	# копирование файлов конфигурации
+  control.vm.provision "file", source: "./confs/deployment1.yaml", destination: "./" # # копирование файла конфигурации для app1. provision "file" это то что будет работа над файлом, source - расположение файла, destination - то куда он будет скопирован
+  control.vm.provision "file", source: "./confs/deployment2.yaml", destination: "./"
+  control.vm.provision "file", source: "./confs/deployment3.yaml", destination: "./"
+  control.vm.provision "file", source: "./confs/ingress.yaml", destination: "./"
+  control.vm.provision "shell", path: "scripts/apply.sh"
+  end
+end
