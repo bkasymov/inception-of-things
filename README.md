@@ -23,12 +23,12 @@ At fist exercise create 2 virtual machines (image CentOS, version 7) via vagrant
 
 # P2
 
-![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p2.png)
+![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p2-2.png)
 
 
 At the second exercise create one virtual machine and install K3S. In K3S cluster install 3 deployments of web, where second deployment have 3 replicas. Host should have access to all web servers via localhost. 
 
-![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p2-2.png)
+![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p2.png)
 
 # P3
 
