@@ -27,7 +27,7 @@ At the second exercise create one virtual machine and install K3S. In K3S cluste
 # P3
 
 Install K3D where have deployment of ARGO CD. Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. At this task we set configurations for deployment of our simple application and support update of versions via hash compare of commits.
-
+![Image alt](https://github.com/behaqos/inception-of-things/raw/master/Screenshot 2022-08-26 at 02.19.49.png/p2.png)
 # Bonus exercise
 
 Install K3D, Argo CD and GitLab service. After that we create new repository and configure for connection between Argo CD and Gitlab for sync and deployment.
