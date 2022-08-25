@@ -14,7 +14,22 @@ This project aims to introduce you to kubernetes from a developer perspective. Y
 - Rigor
 - Network & system administration
 
+# P1
+
+At fist exercise create 2 virtual machines (image CentOS, version 7) via vagrant with static IP address and name. After launch script install lite version of kubernetes - K3D. Next step is set agent virtual machine like a node for server virtual machine and check status.
+
+# P2
+
+At the second exercise create one virtual machine and install K3S. In K3S cluster install 3 deployments of web, where second deployment have 3 replicas. Host should have access to all web servers via localhost. 
+
 # P3
+
+Install K3D where have deployment of ARGO CD. Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. At this task we set configurations for deployment of our simple application and support update of versions via hash compare of commits.
+
+# Bonus exercise
+
+Install K3D, Argo CD and GitLab service. After that we create new repository and configure for connection between Argo CD and Gitlab for sync and deployment.
+
 # Difference K3D & K3S
 1. K3D deploy to Docker-based k3s Kubernetes, and K3S on virtual-machine-based Kubernetes cluster
 2. K3D have scalable version
