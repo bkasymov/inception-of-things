@@ -23,9 +23,6 @@ This project aims to introduce you to kubernetes from a developer perspective. Y
 
 
 # Useful commands:
-
-
-# TODO проверить красные линии и 
 vagrant up
 kubectl get all -n kube-system
 kubectl get all 
