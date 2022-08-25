@@ -17,7 +17,7 @@ This project aims to introduce you to kubernetes from a developer perspective. Y
 # P1
 
 
-![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p1.png)
+![Image alt](https://github.com/behaqos/inception-of-things/raw/master/images/p1.png = 250x250)
 
 At fist exercise create 2 virtual machines (image CentOS, version 7) via vagrant with static IP address and name. After launch script install lite version of kubernetes - K3D. Next step is set agent virtual machine like a node for server virtual machine and check status.
 
